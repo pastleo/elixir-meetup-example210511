@@ -5,11 +5,12 @@ defmodule Example210511.TicketSeat do
     Agent.start_link(fn -> %{} end, name: __MODULE__)
   end
 
-  def book(seat, owner) do
-    Agent.update(__MODULE__, &Map.merge(%{seat => owner}, &1))
+  def book(seat, user) do
+    Agent.update(__MODULE__, &Map.merge(%{seat => user}, &1))
+    Agent.get(__MODULE__, &Map.get(&1, seat)) == user
   end
 
-  def owner(seat) do
-    Agent.get(__MODULE__, &Map.get(&1, seat))
+  def dump() do
+    Agent.get(__MODULE__, & &1)
   end
 end

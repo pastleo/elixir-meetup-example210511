@@ -1,6 +1,7 @@
 defmodule Example210511 do
   alias Example210511.TicketSeat
-  #@seat_max 9999
+  # @seat_max 9999
+  # @seat_max 2999
   @seat_max 9
 
   def spawn_tasks_to_book do
@@ -11,12 +12,10 @@ defmodule Example210511 do
   end
 
   def book_until_success do
-    start_seat = Enum.random(0..@seat_max)
-    owner = [self(), Enum.random(0..1000000)]
-    Enum.map((0..@seat_max), fn x -> rem(start_seat + x, @seat_max + 1) end)
+    user = [self(), Enum.random(0..1000000)]
+    Enum.shuffle(0..@seat_max)
     |> Enum.find(fn seat ->
-      TicketSeat.book(seat, owner)
-      TicketSeat.owner(seat) == owner
+      TicketSeat.book(seat, user)
     end)
   end
 end
